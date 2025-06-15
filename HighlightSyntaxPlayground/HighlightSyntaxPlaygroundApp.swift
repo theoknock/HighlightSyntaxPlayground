@@ -7,6 +7,18 @@
 
 import SwiftUI
 import SwiftData
+import HighlightSwift
+
+private struct HighlightKey: EnvironmentKey {
+    static let defaultValue = Highlight()
+}
+
+extension EnvironmentValues {
+    var highlight: Highlight {
+        get { self[HighlightKey.self] }
+        set { self[HighlightKey.self] = newValue }
+    }
+}
 
 @main
 struct HighlightSyntaxPlaygroundApp: App {
@@ -22,6 +34,8 @@ struct HighlightSyntaxPlaygroundApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+
+    @State private var attributedString = AttributedString("print(\"Hello World!\")")
 
     var body: some Scene {
         WindowGroup {
