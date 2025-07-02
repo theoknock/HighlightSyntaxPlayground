@@ -38,7 +38,9 @@ struct SyntaxTextView: UIViewRepresentable {
     func updateUIView(_ uiView: UITextView, context: Context) {
         Task {
             let attributed = try await highlighter.attributedText(code, language: "swift")
-            uiView.attributedText = NSAttributedString(attributed)
+            await MainActor.run {
+                uiView.attributedText = NSAttributedString(attributed)
+            }
         }
     }
 
